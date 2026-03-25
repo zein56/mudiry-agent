@@ -125,6 +125,20 @@ class DeviceManager {
       return { ok: false, error: "device_not_found" };
     }
 
+    const testMode = global.APP_MODE?.isTestMode === true || process.env.TEST_MODE === "true";
+    if (testMode) {
+      this.logger.info("🧪 TEST MODE: device command simulated", { deviceId, action, requestId });
+      return {
+        ok: true,
+        simulated: true,
+        result: {
+          success: true,
+          simulated: true,
+          message: "Test mode - no real device communication"
+        }
+      };
+    }
+
     let driver;
     try {
       driver = await this.getDriverForDevice(device);

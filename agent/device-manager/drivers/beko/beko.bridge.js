@@ -7,6 +7,7 @@ const WebSocket = require("ws");
 
 const DEFAULT_TIMEOUT_MS = 15000;
 const DEFAULT_PORT = 8081;
+const isTestMode = process.env.TEST_MODE === "true";
 
 function isPlainObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -111,6 +112,9 @@ class BekoBridge {
   }
 
   async send(command) {
+    if (isTestMode) {
+      return { ok: true, simulated: true };
+    }
     if (this._isWs()) {
       return this._queueWs(() => this._sendWs(command));
     }

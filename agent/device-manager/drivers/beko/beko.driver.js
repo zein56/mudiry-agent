@@ -4,6 +4,7 @@ const { BekoService } = require("./beko.service");
 const { BekoBridge } = require("./beko.bridge");
 
 const MAX_RETRIES = 3;
+const isTestMode = process.env.TEST_MODE === "true";
 const SENSITIVE_KEYS = [
   "token",
   "authorization",
@@ -69,10 +70,26 @@ class BekoDriver {
     const action = command?.action;
     const payload = command?.payload;
 
-    if (!this.connected) await this.connect();
-
     const request = this.service.buildRequest(action, payload);
     const safeRequest = redactValue(request);
+
+    if (isTestMode) {
+      console.log("🧪 TEST MODE - Beko command simulated", safeRequest);
+      if (this.logger?.debug) {
+        this.logger.debug("🧪 TEST MODE: Beko command simulated", {
+          deviceId: this.device.id,
+          action: request.action,
+          request: safeRequest
+        });
+      }
+      return {
+        success: true,
+        simulated: true,
+        message: "Test mode - no real device communication"
+      };
+    }
+
+    if (!this.connected) await this.connect();
 
     let lastError;
 

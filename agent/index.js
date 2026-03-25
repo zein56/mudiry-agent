@@ -1,5 +1,14 @@
 "use strict";
 
+const MODE = process.env.NODE_ENV || "production";
+const isTestMode = process.env.TEST_MODE === "true";
+const isProduction = MODE === "production" && !isTestMode;
+
+global.APP_MODE = {
+  isTestMode,
+  isProduction
+};
+
 const path = require("path");
 const { loadConfig } = require("./core/config");
 const { createLogger } = require("./core/logger");
