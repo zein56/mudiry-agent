@@ -1,0 +1,14 @@
+﻿{
+  "name": "bridge-agent",
+  "version": "1.0.0",
+  "description": "Bridge Agent (Gateway) between central server and local device agents",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "pino": "^9.3.2",
+    "ws": "^8.18.0"
+  }
+}

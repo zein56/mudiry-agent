@@ -1,0 +1,38 @@
+﻿{
+  "upstream": {
+    "url": "wss://central.example.com/bridge",
+    "token": "CHANGE_ME",
+    "bridgeId": "bridge-1",
+    "handshakeTimeoutMs": 10000,
+    "reconnect": {
+      "minDelayMs": 1000,
+      "maxDelayMs": 30000,
+      "factor": 1.6,
+      "jitter": 0.2
+    }
+  },
+  "downstream": {
+    "host": "0.0.0.0",
+    "port": 8081,
+    "path": "/",
+    "maxConnections": 10000
+  },
+  "security": {
+    "clientIdPattern": "^[a-zA-Z0-9_-]{3,64}$",
+    "messageSizeLimit": 262144,
+    "requireUpstreamToken": true,
+    "rateLimit": {
+      "windowMs": 10000,
+      "max": 100
+    }
+  },
+  "heartbeat": {
+    "intervalMs": 10000,
+    "timeoutMs": 30000
+  },
+  "queue": {
+    "maxPerClient": 500,
+    "maxUpstream": 5000
+  },
+  "logLevel": "info"
+}
