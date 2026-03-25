@@ -53,7 +53,7 @@ function createLocalApi({ config, logger, deviceManager }) {
   let server;
 
   async function start() {
-    const port = config?.http?.port ?? 7070;
+    const port = config?.http?.port ?? 8080;
     const host = config?.http?.host ?? "127.0.0.1";
     return new Promise((resolve) => {
       server = app.listen(port, host, () => {

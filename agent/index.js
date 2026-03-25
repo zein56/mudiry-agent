@@ -10,6 +10,8 @@ global.APP_MODE = {
 };
 
 const path = require("path");
+const fs = require("fs");
+
 const { loadConfig } = require("./core/config");
 const { createLogger } = require("./core/logger");
 const DeviceManager = require("./device-manager/device.manager");
@@ -17,8 +19,29 @@ const { createLocalApi } = require("./api/local.api");
 const { routeMessage } = require("./router");
 const { WsClient } = require("./services/ws.client");
 
+/**
+ * 🔥 PKG SAFE PATH RESOLVER
+ */
+function resolveAppPath(relPath) {
+  const base = process.pkg
+    ? path.dirname(process.execPath) // exe'nin olduğu yer
+    : __dirname;
+
+  return path.join(base, relPath);
+}
+
 async function main() {
-  const configPath = path.join(__dirname, "config.json");
+  // ✅ FIXED
+  const configPath = resolveAppPath("config.json");
+
+  // opsiyonel: config yoksa oluştur
+  if (!fs.existsSync(configPath)) {
+    fs.writeFileSync(
+      configPath,
+      JSON.stringify({ ws: { enabled: false } }, null, 2)
+    );
+  }
+
   const config = loadConfig(configPath);
   const logger = createLogger(config.logging);
 

@@ -1,7 +1,28 @@
 "use strict";
 
 const EventEmitter = require("events");
-const WebSocket = require("ws");
+let WebSocket;
+
+(function loadWS() {
+  try {
+    // Normal Node.js
+    WebSocket = require("ws");
+  } catch (e) {
+    try {
+      // pkg exe → exe'nin yanındaki node_modules
+      const path = require("path");
+      const base =
+        process.pkg
+          ? path.dirname(process.execPath)
+          : process.cwd();
+
+      WebSocket = require(path.join(base, "node_modules", "ws"));
+    } catch (err) {
+      console.error("WS LOAD FAILED:", err);
+      throw err;
+    }
+  }
+})();
 
 class WsClient extends EventEmitter {
   constructor({ config, logger }) {

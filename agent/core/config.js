@@ -6,7 +6,7 @@ const path = require("path");
 const DEFAULT_CONFIG = {
   http: {
     host: "127.0.0.1",
-    port: 7070
+    port: 8080
   },
   ws: {
     enabled: false,

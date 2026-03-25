@@ -10,5 +10,19 @@
   "dependencies": {
     "pino": "^9.3.2",
     "ws": "^8.18.0"
+  },
+  "pkg": {
+    "scripts": [
+      "**/*.js",
+      "node_modules/ws/**/*.js",
+      "node_modules/pino/**/*.js"
+    ],
+    "assets": [
+      "**/*"
+    ],
+    "dependencies": [
+      "ws",
+      "pino"
+    ]
   }
 }
