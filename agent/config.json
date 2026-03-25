@@ -1,0 +1,28 @@
+{
+  "http": {
+    "host": "127.0.0.1",
+    "port": 7070
+  },
+  "ws": {
+    "enabled": false,
+    "url": "ws://localhost:5001/agent",
+    "authToken": "",
+    "reconnect": {
+      "minDelayMs": 1000,
+      "maxDelayMs": 15000
+    }
+  },
+  "storagePath": "./storage/device.store.json",
+  "maxDevices": 200,
+  "logging": {
+    "level": "info"
+  },
+  "device": {
+    "autoConnect": false,
+    "autoDisconnect": true
+  },
+  "security": {
+    "allowedDeviceTypes": ["printer", "cash", "pos"],
+    "allowedConnectionTypes": ["network", "usb", "serial", "local", "sdk"]
+  }
+}
